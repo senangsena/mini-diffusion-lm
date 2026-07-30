@@ -55,6 +55,9 @@ def fig_block():
         e = [r["acc_std"] for r in rows]
         ax.errorbar(b, a, yerr=e, marker="o", color=COL[task], label=TASK_LABEL[task])
         ax2.plot(b, [r["nfe"] for r in rows], ls="--", marker="x", color="gray", alpha=0.6)
+    bs = [1, 2, 3, 4, 6, 12]
+    ax.plot(bs, [2.0 ** -(b - 1) for b in bs], ls=":", color="#333333",
+            label="branch の理論値 $2^{-(B-1)}$")
     ax.set_xlabel("block_length（1ブロックを1ステップで確定）")
     ax.set_ylabel("完全一致率")
     ax2.set_ylabel("forward 回数（破線, 灰）")
@@ -74,6 +77,9 @@ def fig_steps():
         a = [r["acc"] for r in rows]
         e = [r["acc_std"] for r in rows]
         ax.errorbar(s, a, yerr=e, marker="o", color=COL[task], label=TASK_LABEL[task])
+    ss = [1, 2, 3, 4, 6, 12]
+    ax.plot(ss, [2.0 ** -(12 / s - 1) for s in ss], ls=":", color="#333333",
+            label="branch の理論値 $2^{-(12/S-1)}$")
     ax.set_xlabel("denoising_steps（block_length=12 固定）")
     ax.set_ylabel("完全一致率")
     ax.set_ylim(-0.05, 1.05)
